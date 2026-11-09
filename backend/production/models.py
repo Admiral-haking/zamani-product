@@ -2,7 +2,7 @@ import re
 from decimal import Decimal
 
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import FileExtensionValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 
@@ -34,7 +34,13 @@ class Product(models.Model):
     """A finished meat product that can be produced."""
 
     name = models.CharField("نام محصول", max_length=120, unique=True)
-    image = models.ImageField("تصویر", upload_to="products/%Y/%m/", blank=True, null=True)
+    image = models.ImageField(
+        "تصویر",
+        upload_to="products/%Y/%m/",
+        blank=True,
+        null=True,
+        validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp"])],
+    )
     is_active = models.BooleanField("فعال", default=True)
     created_at = models.DateTimeField("تاریخ ایجاد", auto_now_add=True)
 

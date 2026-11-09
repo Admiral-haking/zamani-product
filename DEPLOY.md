@@ -118,13 +118,33 @@ python manage.py createsuperuser
 
 ## ۴. استقرار فرانت‌اند روی Vercel
 
+### حالت چندسرویسی Vercel
+
+این repository فایل `vercel.json` در ریشه دارد و دو سرویس را در یک پروژه مدیریت می‌کند:
+
+- `frontend` روی مسیر `/`
+- `zamaniburger-api` فقط از مسیر `/api/*`
+
+در این حالت مقدار production فرانت‌اند باید `VITE_API_URL=/api` باشد و نیازی به binding نیست؛ frontend از rewrite عمومی `/api/*` به سرویس API استفاده می‌کند. برای backend این environmentها را در Vercel تنظیم کنید:
+
+```text
+DEBUG=False
+SECRET_KEY=<random-long-secret>
+DATABASE_URL=<postgresql-url-with-sslmode=require>
+ALLOWED_HOSTS=<your-vercel-domain>,.vercel.app
+CORS_ALLOWED_ORIGINS=https://<your-vercel-domain>
+CSRF_TRUSTED_ORIGINS=https://<your-vercel-domain>
+```
+
+`DATABASE_URL` و `SECRET_KEY` را در فایل‌های repository قرار ندهید. اگر backend روی Render باقی می‌ماند، از `render.yaml` و مقدار `VITE_API_URL=https://<render-service>.onrender.com/api` استفاده کنید؛ این حالت با چندسرویسی Vercel هم‌زمان لازم نیست.
+
 1. در Vercel → **Add New** → **Project** → مخزن GitHub را انتخاب کن.
-2. **Root Directory** را روی `frontend` بگذار.
-3. Framework: **Vite** (خودکار تشخیص داده می‌شود).
-4. Build Command: `npm run build` — Output Directory: `dist`.
+2. **Root Directory** را روی ریشهٔ repository بگذار؛ فایل `vercel.json` ریشه، هر دو سرویس را مدیریت می‌کند.
+3. Framework را روی حالت تشخیص خودکار بگذار؛ تنظیم frontend و backend داخل `vercel.json` انجام شده است.
+4. Build Command و Output Directory را در داشبورد override نکن؛ سرویس frontend از `npm run build` و `dist` استفاده می‌کند.
 5. در **Environment Variables** اضافه کن:
    ```text
-   VITE_API_URL=https://<SERVICE-NAME>.onrender.com/api
+   VITE_API_URL=/api
    ```
 6. Deploy. آدرس نهایی چیزی شبیه این می‌شود:
    ```text

@@ -218,6 +218,19 @@ class ProductSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("نام محصول نمی‌تواند خالی باشد.")
         return value
 
+    def validate_image(self, value):
+        max_size = 5 * 1024 * 1024
+        if value.size > max_size:
+            raise serializers.ValidationError("حجم تصویر نمی‌تواند بیشتر از ۵ مگابایت باشد.")
+        content_type = getattr(value, "content_type", "")
+        if content_type and content_type not in {
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+        }:
+            raise serializers.ValidationError("فرمت تصویر باید JPG، PNG یا WebP باشد.")
+        return value
+
 
 class ProductionRecordSerializer(serializers.ModelSerializer):
     producer_name = serializers.CharField(source="producer.name", read_only=True)
