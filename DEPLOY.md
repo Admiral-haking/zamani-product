@@ -136,6 +136,8 @@ CORS_ALLOWED_ORIGINS=https://<your-vercel-domain>
 CSRF_TRUSTED_ORIGINS=https://<your-vercel-domain>
 ```
 
+برای دامنهٔ فعلی production یعنی `pr.zamaniburger.ir`، مقدار `ALLOWED_HOSTS` باید حداقل شامل `pr.zamaniburger.ir` باشد و `DEBUG` حتماً `False` تنظیم شود. اگر `DEBUG` در Vercel تنظیم نشده باشد، کد در محیط Vercel به‌صورت امن روی `False` باقی می‌ماند.
+
 `DATABASE_URL` و `SECRET_KEY` را در فایل‌های repository قرار ندهید. اگر backend روی Render باقی می‌ماند، از `render.yaml` و مقدار `VITE_API_URL=https://<render-service>.onrender.com/api` استفاده کنید؛ این حالت با چندسرویسی Vercel هم‌زمان لازم نیست.
 
 اگر Neon Integration را با prefix مثل `STORAGE` نصب کرده‌اید، متغیرهای `STORAGE_DATABASE_URL` و `STORAGE_DATABASE_URL_UNPOOLED` نیز توسط backend پشتیبانی می‌شوند؛ با این حال نام استاندارد پیشنهادی برای پروژه `DATABASE_URL` است.

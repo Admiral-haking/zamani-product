@@ -26,7 +26,9 @@ def env_list(name: str, default: str = "") -> list[str]:
     return [item.strip() for item in raw.split(",") if item.strip()]
 
 
-DEBUG = env_bool("DEBUG", True)
+# Vercel must never fall back to Django's debug error pages when an environment
+# variable is missing. Local development still defaults to DEBUG=True.
+DEBUG = env_bool("DEBUG", os.getenv("VERCEL_ENV") is None)
 
 SECRET_KEY = os.getenv("SECRET_KEY", "")
 if not SECRET_KEY:
@@ -37,7 +39,10 @@ if not SECRET_KEY:
             "SECRET_KEY environment variable is required when DEBUG is off."
         )
 
-ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "127.0.0.1,localhost,testserver")
+ALLOWED_HOSTS = env_list(
+    "ALLOWED_HOSTS",
+    "127.0.0.1,localhost,testserver,pr.zamaniburger.ir",
+)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
