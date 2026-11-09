@@ -1,0 +1,43 @@
+# Local tooling / sandbox
+.npm-cache/
+.pip-cache/
+.tmp/
+*.log
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+db.sqlite3
+.env
+.env.*
+!.env.example
+!*.example
+venv/
+.venv/
+backend/venv/
+backend/.venv/
+backend/staticfiles/
+backend/media/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / frontend
+node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.vercel/
+.vercel/
+tools/node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# QA debug captures (keep the numbered final screenshots)
+docs/screenshots/debug-*
+docs/screenshots/99-failure-state.png
