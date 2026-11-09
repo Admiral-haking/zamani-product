@@ -138,6 +138,8 @@ CSRF_TRUSTED_ORIGINS=https://<your-vercel-domain>
 
 `DATABASE_URL` و `SECRET_KEY` را در فایل‌های repository قرار ندهید. اگر backend روی Render باقی می‌ماند، از `render.yaml` و مقدار `VITE_API_URL=https://<render-service>.onrender.com/api` استفاده کنید؛ این حالت با چندسرویسی Vercel هم‌زمان لازم نیست.
 
+اگر Neon Integration را با prefix مثل `STORAGE` نصب کرده‌اید، متغیرهای `STORAGE_DATABASE_URL` و `STORAGE_DATABASE_URL_UNPOOLED` نیز توسط backend پشتیبانی می‌شوند؛ با این حال نام استاندارد پیشنهادی برای پروژه `DATABASE_URL` است.
+
 1. در Vercel → **Add New** → **Project** → مخزن GitHub را انتخاب کن.
 2. **Root Directory** را روی ریشهٔ repository بگذار؛ فایل `vercel.json` ریشه، هر دو سرویس را مدیریت می‌کند.
 3. Framework را روی حالت تشخیص خودکار بگذار؛ تنظیم frontend و backend داخل `vercel.json` انجام شده است.

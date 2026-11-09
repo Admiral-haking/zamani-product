@@ -86,7 +86,11 @@ TEMPLATES = [
 WSGI_APPLICATION = "zamaniburger_backend.wsgi.application"
 ASGI_APPLICATION = "zamaniburger_backend.asgi.application"
 
-DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
+DATABASE_URL = (
+    os.getenv("DATABASE_URL")
+    or os.getenv("STORAGE_DATABASE_URL")
+    or ""
+).strip()
 
 if DATABASE_URL:
     DATABASES = {
