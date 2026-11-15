@@ -12,6 +12,7 @@ const FIELD_LABELS = {
   producer: 'تولیدکننده',
   product: 'محصول',
   delivered_meat_kg: 'وزن گوشت تحویلی',
+  produced_meat_kg: 'وزن گوشت تولیدشده',
   amount_kg: 'مقدار تولید',
   packages_count: 'تعداد بسته',
   waste_kg: 'وزن معدومی',

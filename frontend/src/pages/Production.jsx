@@ -75,6 +75,7 @@ function emptyForm(productId = '', producerId = '') {
     producer: producerId ? String(producerId) : '',
     product: productId ? String(productId) : '',
     delivered: '',
+    produced: '',
     amount: '',
     packages: '',
     waste: '',
@@ -923,6 +924,7 @@ export default function Production() {
         return
       }
       let delivered = 0
+      let produced = 0
       if (formMode === 'sixty') {
         const deliveredValue = parseNumericInput(form.delivered)
         if (deliveredValue === null || deliveredValue <= 0) {
@@ -930,6 +932,12 @@ export default function Production() {
           return
         }
         delivered = deliveredValue
+        const producedValue = parseNumericInput(form.produced)
+        if (producedValue === null || producedValue <= 0) {
+          setFieldErrors({ produced: 'وزن گوشت تولید شده باید بیشتر از صفر باشد.' })
+          return
+        }
+        produced = producedValue
       }
       const waste = optionalNumber(form.waste)
       const scrap = optionalNumber(form.scrap)
@@ -952,7 +960,10 @@ export default function Production() {
             packages_count: line.packages,
           })),
           ...(formMode === 'sixty'
-            ? { delivered_meat_kg: String(delivered) }
+            ? {
+                delivered_meat_kg: String(delivered),
+                produced_meat_kg: String(produced),
+              }
             : {}),
           waste_kg: String(waste),
           scrap_kg: String(scrap),
@@ -967,6 +978,7 @@ export default function Production() {
         setForm((current) => ({
           ...current,
           delivered: '',
+          produced: '',
           packages: '',
           waste: '',
           scrap: '',
@@ -1567,15 +1579,26 @@ export default function Production() {
                           placeholder="مثلاً ۲۰۰"
                         />
                         {formMode === 'sixty' && (
-                          <NumberField
-                            id="production-delivered"
-                            label="وزن گوشت تحویل داده شده (کیلوگرم)"
-                            value={form.delivered}
-                            onChange={(value) => changeField('delivered', value)}
-                            error={fieldErrors.delivered}
-                            required
-                            placeholder="مثلاً ۱۵۰۰"
-                          />
+                          <>
+                            <NumberField
+                              id="production-delivered"
+                              label="وزن گوشت تحویل داده شده (کیلوگرم)"
+                              value={form.delivered}
+                              onChange={(value) => changeField('delivered', value)}
+                              error={fieldErrors.delivered}
+                              required
+                              placeholder="مثلاً ۱۵۰۰"
+                            />
+                            <NumberField
+                              id="production-produced"
+                              label="وزن گوشت تولید شده (کیلوگرم)"
+                              value={form.produced}
+                              onChange={(value) => changeField('produced', value)}
+                              error={fieldErrors.produced}
+                              required
+                              placeholder="مثلاً ۱۲۰۰"
+                            />
+                          </>
                         )}
                         <div>
                           <label htmlFor="production-product" className="field-label">
@@ -2313,7 +2336,15 @@ export default function Production() {
                 </dd>
               </div>
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-                <dt className="text-[10px] text-white/35">گوشت تولید شده</dt>
+                <dt className="text-[10px] text-white/35">گوشت تولید شده (کل)</dt>
+                <dd className="mt-1 font-bold text-white">
+                  {Number(details.produced_meat_kg) > 0
+                    ? formatKg(details.produced_meat_kg)
+                    : '—'}
+                </dd>
+              </div>
+              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+                <dt className="text-[10px] text-white/35">وزن محصول این ردیف</dt>
                 <dd className="mt-1 font-bold text-white">{formatKg(details.amount_kg)}</dd>
               </div>
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">

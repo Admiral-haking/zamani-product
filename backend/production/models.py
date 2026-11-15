@@ -114,6 +114,13 @@ class ProductionRecord(models.Model):
         validators=[MinValueValidator(Decimal("0"))],
         default=Decimal("0"),
     )
+    produced_meat_kg = models.DecimalField(
+        "وزن گوشت تولید شده (کیلوگرم)",
+        max_digits=12,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0"))],
+        default=Decimal("0"),
+    )
     amount_kg = models.DecimalField(
         "وزن گوشت تولید شده (کیلوگرم)",
         max_digits=12,

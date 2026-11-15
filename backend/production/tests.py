@@ -545,6 +545,7 @@ class ZamaniBurgerApiTests(APITestCase):
                 "date": self.today.isoformat(),
                 "producer": self.producer.id,
                 "delivered_meat_kg": "1500",
+                "produced_meat_kg": "1200",
                 "waste_kg": "2",
                 "scrap_kg": "1",
                 "note": "ثبت گروهی ۶۰ درصد",
@@ -561,6 +562,8 @@ class ZamaniBurgerApiTests(APITestCase):
         self.assertEqual(response.data[1]["amount_kg"], "24.00")
         self.assertEqual(response.data[0]["delivered_meat_kg"], "1500.00")
         self.assertEqual(response.data[1]["delivered_meat_kg"], "0.00")
+        self.assertEqual(response.data[0]["produced_meat_kg"], "1200.00")
+        self.assertEqual(response.data[1]["produced_meat_kg"], "0.00")
         self.assertEqual(response.data[0]["waste_kg"], "2.00")
         self.assertEqual(response.data[1]["waste_kg"], "0.00")
         self.assertEqual(response.data[0]["note"], "ثبت گروهی ۶۰ درصد")

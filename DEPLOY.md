@@ -107,7 +107,7 @@ python manage.py seed_catalog
 python manage.py createsuperuser
 ```
 
-- `seed_catalog` همان ۷ محصول و ۳ تولیدکننده فعلی را می‌سازد و اجرای دوباره‌اش مشکلی ندارد.
+- `seed_catalog` همان ۸ محصول و ۳ تولیدکننده فعلی را می‌سازد و اجرای دوباره‌اش مشکلی ندارد.
 - برای `createsuperuser` نام کاربری و رمز قوی انتخاب کن. اگر می‌خواهی غیرتعاملی باشد:
   ```bash
   DJANGO_SUPERUSER_PASSWORD='یک-رمز-قوی' python manage.py createsuperuser --noinput --username admin --email admin@example.com
@@ -219,7 +219,7 @@ CSRF_TRUSTED_ORIGINS=https://<SERVICE-NAME>.onrender.com,https://zamaniburger.ve
 - [ ] کد روی GitHub push شده است
 - [ ] `DEBUG=False` و `SECRET_KEY` تصادفی روی Render تنظیم شده است
 - [ ] `DATABASE_URL` به Neon وصل است و migrate اجرا شده
-- [ ] `seed_catalog` اجرا شده (۷ محصول و ۳ تولیدکننده)
+- [ ] `seed_catalog` اجرا شده (۸ محصول و ۳ تولیدکننده)
 - [ ] کاربر مدیر با رمز قوی ساخته شده و رمز پیش‌فرض توسعه استفاده نشده
 - [ ] `CORS_ALLOWED_ORIGINS` دقیقاً دامنه Vercel است و `CSRF_TRUSTED_ORIGINS` هم دامنه Render و هم دامنه Vercel را دارد
 - [ ] `/api/health/` سبز است

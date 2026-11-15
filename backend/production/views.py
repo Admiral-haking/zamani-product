@@ -285,6 +285,7 @@ class ProductionRecordViewSet(
 
         date = request.data.get("date")
         delivered = request.data.get("delivered_meat_kg", "0") or "0"
+        produced = request.data.get("produced_meat_kg", "0") or "0"
         waste = request.data.get("waste_kg", "0") or "0"
         scrap = request.data.get("scrap_kg", "0") or "0"
         note = (request.data.get("note") or "").strip()
@@ -301,6 +302,9 @@ class ProductionRecordViewSet(
                     "packages_count": item.get("packages_count"),
                     "delivered_meat_kg": (
                         delivered if role == ROLE_SIXTY and index == 0 else "0"
+                    ),
+                    "produced_meat_kg": (
+                        produced if role == ROLE_SIXTY and index == 0 else "0"
                     ),
                     "waste_kg": waste if index == 0 else "0",
                     "scrap_kg": scrap if index == 0 else "0",

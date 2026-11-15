@@ -253,6 +253,7 @@ class ProductionRecordSerializer(serializers.ModelSerializer):
             "product_name",
             "product_image_url",
             "delivered_meat_kg",
+            "produced_meat_kg",
             "amount_kg",
             "packages_count",
             "waste_kg",
@@ -265,6 +266,7 @@ class ProductionRecordSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "created_by", "created_at"]
         extra_kwargs = {
             "delivered_meat_kg": {"required": False},
+            "produced_meat_kg": {"required": False},
             "amount_kg": {"required": False, "allow_null": True},
             "packages_count": {"required": False},
             "waste_kg": {"required": False},
@@ -315,6 +317,13 @@ class ProductionRecordSerializer(serializers.ModelSerializer):
             )
         return value
 
+    def validate_produced_meat_kg(self, value):
+        if value < 0:
+            raise serializers.ValidationError(
+                "وزن گوشت تولید شده نمی‌تواند منفی باشد."
+            )
+        return value
+
     def validate_packages_count(self, value):
         if value < 0:
             raise serializers.ValidationError("تعداد بسته نمی‌تواند منفی باشد.")
@@ -350,6 +359,7 @@ class ProductionRecordSerializer(serializers.ModelSerializer):
             if packages <= 0:
                 errors["packages_count"] = "تعداد بسته باید بزرگ‌تر از صفر باشد."
             attrs["delivered_meat_kg"] = Decimal("0")
+            attrs["produced_meat_kg"] = Decimal("0")
             amount = attrs.get("amount_kg")
             if amount is None and product is not None:
                 grams = Product.grams_of_name(product.name)
@@ -376,8 +386,14 @@ class ProductionRecordSerializer(serializers.ModelSerializer):
                     errors["delivered_meat_kg"] = (
                         "وزن گوشت تحویل داده شده باید بیشتر از صفر باشد."
                     )
+                produced = attrs.get("produced_meat_kg")
+                if produced is None or produced <= 0:
+                    errors["produced_meat_kg"] = (
+                        "وزن گوشت تولید شده باید بیشتر از صفر باشد."
+                    )
             else:
                 attrs["delivered_meat_kg"] = Decimal("0")
+                attrs["produced_meat_kg"] = Decimal("0")
         else:
             delivered = attrs.get("delivered_meat_kg")
             if delivered is None and self.instance:

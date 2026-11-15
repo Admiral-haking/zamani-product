@@ -14,6 +14,7 @@ from production.models import Producer, Product
 PRODUCTS = (
     "همبرگر ۶۰ درصد ۱۰۰ گرمی",
     "همبرگر ۶۰ درصد ۱۲۵ گرمی",
+    "استیک ۶۰ درصد",
     "همبرگر ۹۰ درصد ۱۰۰ گرمی",
     "همبرگر ۹۰ درصد ۱۲۰ گرمی",
     "همبرگر ۹۰ درصد ۱۲۵ گرمی",
@@ -29,7 +30,7 @@ PRODUCERS = (
 
 
 class Command(BaseCommand):
-    help = "Create the 7 products and 3 producers required by the dashboard."
+    help = "Create the 8 products and 3 producers required by the dashboard."
 
     def handle(self, *args, **options):
         created_products = 0
